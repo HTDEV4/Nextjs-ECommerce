@@ -11,6 +11,9 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { protectSignUpAction } from "@/actions/auth";
 import { toast } from "sonner";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useRouter } from "next/navigation";
+import { ArrowRight } from "lucide-react";
 
 export default function RegisterPage() {
     const [formData, setFormData] = useState({
@@ -18,6 +21,9 @@ export default function RegisterPage() {
         email: '',
         password: ''
     });
+
+    const { register, isLoading } = useAuthStore();
+    const router = useRouter();
 
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setFormData(prev => ({
@@ -35,6 +41,12 @@ export default function RegisterPage() {
             return;
         }
 
+        const userId = await register(formData.name, formData.email, formData.password);
+
+        if (userId) {
+            toast.success('Registration Successfully!')
+            router.push(`/auth/login`);
+        }
     }
 
     return (
@@ -94,7 +106,7 @@ export default function RegisterPage() {
                             <Input
                                 id="password"
                                 name="password"
-                                type="text"
+                                type="password"
                                 placeholder="Enter your password"
                                 required
                                 className="bg-[#ffede1]"
@@ -102,8 +114,15 @@ export default function RegisterPage() {
                                 onChange={handleOnChange}
                             />
                         </div>
-                        <Button type="submit" className="w-full bg-black text-white hover:bg-black transition-colors">
-                            CREATE ACCOUNT
+                        <Button type="submit" disabled={isLoading} className="w-full bg-black text-white hover:bg-black transition-colors">
+                            {
+                                isLoading ? 'Creating Account...' : (
+                                    <>
+                                        CREATE ACCOUNT
+                                        <ArrowRight className="w-4 h-4 ml-2" />
+                                    </>
+                                )
+                            }
                         </Button>
                         <p className="text-center text-[#3f3d56] text-sm">
                             Already have an account{" "}

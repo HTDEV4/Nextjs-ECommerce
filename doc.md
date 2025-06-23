@@ -22,3 +22,4 @@
 - port tùy vào mình mún config port nào match với 5432 thì mình chọn
 - Khi thay đổi POSTGRES_DB trong `.env` `/cuối cùng` thì trong docker POSTGRES_DB nó cũng sẽ thay đổi theo
 - Cái th seed trong prisma nó sẽ gúp chúng ta quản lí role cho toàn hệ thống
+- `Arcjet` dùng để bảo vệ thông tin khi `Đăng ký`
