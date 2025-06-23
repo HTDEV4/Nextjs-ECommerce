@@ -1,3 +1,6 @@
+"use client"
+
+
 import Image from "next/image";
 import banner from "../../../../public/images/banner2.jpg"
 import logo from "../../../../public/images/logo1.png"
@@ -5,9 +8,35 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-
+import React, { useState } from "react";
+import { protectSignUpAction } from "@/actions/auth";
+import { toast } from "sonner";
 
 export default function RegisterPage() {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        password: ''
+    });
+
+    const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData(prev => ({
+            ...prev,
+            [event.target.name]: event.target.value
+        }))
+    }
+
+    const handleSubmit = async (event: React.FormEvent) => {
+        event.preventDefault();
+        const checkFirstLevelOfValidation = await protectSignUpAction(formData.email);
+
+        if (!checkFirstLevelOfValidation.success) {
+            toast.error(checkFirstLevelOfValidation.error);
+            return;
+        }
+
+    }
+
     return (
         <div className="min-h-screen bg-[#fff6f4] flex">
             {/* Banner */}
@@ -33,7 +62,7 @@ export default function RegisterPage() {
                         />
                     </div>
                     {/* Form Đăng ký */}
-                    <form action="" className="space-y-4">
+                    <form onSubmit={handleSubmit} className="space-y-4">
                         <div className="space-y-1">
                             <Label htmlFor="name">Full Name</Label>
                             <Input
@@ -43,6 +72,8 @@ export default function RegisterPage() {
                                 placeholder="Enter your name"
                                 required
                                 className="bg-[#ffede1]"
+                                value={formData.name}
+                                onChange={handleOnChange}
                             />
                         </div>
                         <div className="space-y-1">
@@ -54,6 +85,8 @@ export default function RegisterPage() {
                                 placeholder="Enter your email"
                                 required
                                 className="bg-[#ffede1]"
+                                value={formData.email}
+                                onChange={handleOnChange}
                             />
                         </div>
                         <div className="space-y-1">
@@ -65,6 +98,8 @@ export default function RegisterPage() {
                                 placeholder="Enter your password"
                                 required
                                 className="bg-[#ffede1]"
+                                value={formData.password}
+                                onChange={handleOnChange}
                             />
                         </div>
                         <Button type="submit" className="w-full bg-black text-white hover:bg-black transition-colors">
