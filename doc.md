@@ -23,3 +23,6 @@
 - Khi thay đổi POSTGRES_DB trong `.env` `/cuối cùng` thì trong docker POSTGRES_DB nó cũng sẽ thay đổi theo
 - Cái th seed trong prisma nó sẽ gúp chúng ta quản lí role cho toàn hệ thống
 - `Arcjet` dùng để bảo vệ thông tin khi `Đăng ký`
+
+- Sử dụng middleware để xử lí trung gian URL ngăn không cho vô những đường dẫn khác.
+- ví dụ là mình đã login vô user rồi nhưng mà nhập đường dẫn admin thì vẫn vô trang admin bình thường.
