@@ -14,6 +14,7 @@ import {
   Settings,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/store/useAuthStore";
 
 interface SidebarProps {
   isOpen: Boolean;
@@ -34,22 +35,22 @@ const menuItems = [
   {
     name: "Orders",
     icon: SendToBack,
-    href: "/super-admin/products/orders",
+    href: "/super-admin/orders",
   },
   {
     name: "Coupons",
     icon: FileText,
-    href: "/super-admin/products/coupons",
+    href: "/super-admin/coupons/list",
   },
   {
     name: "Create Coupon",
     icon: ListOrdered,
-    href: "/super-admin/products/list",
+    href: "/super-admin/coupons/add",
   },
   {
     name: "Settings",
     icon: Settings,
-    href: "/super-admin/products/settings",
+    href: "/super-admin/settings",
   },
   {
     name: "logout",
@@ -61,7 +62,12 @@ const menuItems = [
 export default function SuperAdminSideBar({ isOpen, toggle }: SidebarProps) {
   const router = useRouter();
 
-  async function handleLogout() {}
+  const { logout } = useAuthStore();
+
+  async function handleLogout() {
+    await logout();
+    router.push("/auth/login");
+  }
 
   return (
     <div

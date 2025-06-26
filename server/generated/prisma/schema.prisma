@@ -25,6 +25,43 @@ model User {
   refreshToken String?  @unique
 }
 
+model product {
+  id          String   @id @default(cuid())
+  name        String
+  brand       String
+  description String
+  category    String
+  gender      String
+  sizes       String[]
+  colors      String[]
+  price       String
+  stock       Int
+  rating      Float?
+  images      String[]
+  createAt    DateTime @default(now())
+  updateAt    DateTime @updatedAt
+  isFeatured  Boolean  @default(false)
+}
+
+model FeatureBanner {
+  id       String   @id @default(cuid())
+  imageUrl String
+  createAt DateTime @default(now())
+  updateAt DateTime @updatedAt
+}
+
+model Coupon {
+  id              String   @id @default(cuid())
+  code            String   @unique
+  discountPercent Float
+  startDate       DateTime
+  endDate         DateTime
+  usageLimit      Int
+  usageCount      Int
+  createAt        DateTime @default(now())
+  updateAt        DateTime @updatedAt
+}
+
 enum Role {
   USER
   SUPER_ADMIN

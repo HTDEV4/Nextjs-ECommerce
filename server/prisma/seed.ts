@@ -1,41 +1,39 @@
-import { PrismaClient } from '../generated/prisma';
-import bcrypt from 'bcryptjs'
-import { error } from "console";
+import { PrismaClient } from "../generated/prisma";
+import bcrypt from "bcryptjs";
 
-
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 async function main() {
-    const email = "admin@gmail.com"
-    const password = "123456"
-    const name = "Super Admin"
+  const email = "admin@gmail.com";
+  const password = "123456";
+  const name = "Super Admin";
 
-    const existingSuperAmin = await prisma.user.findFirst({
-        where: { role: 'SUPER_ADMIN' }
-    })
+  const existingSuperAmin = await prisma.user.findFirst({
+    where: { role: "SUPER_ADMIN" },
+  });
 
-    if (existingSuperAmin) {
-        return;
-    }
+  if (existingSuperAmin) {
+    return;
+  }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const superAdminUser = await prisma.user.create({
-        data: {
-            email,
-            name,
-            password: hashedPassword,
-            role: "SUPER_ADMIN",
-        }
-    })
+  const hashedPassword = await bcrypt.hash(password, 10);
+  const superAdminUser = await prisma.user.create({
+    data: {
+      email,
+      name,
+      password: hashedPassword,
+      role: "SUPER_ADMIN",
+    },
+  });
 
-    console.log('Super admin created successfully', superAdminUser.email);
+  console.log("Super admin created successfully", superAdminUser.email);
 }
 
 main()
-    .catch((e) => {
-        console.log(e);
-        process.exit(1);
-    })
-    .finally(async () => {
-        await prisma.$disconnect()
-    });
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

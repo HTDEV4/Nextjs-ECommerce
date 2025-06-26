@@ -20,12 +20,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.8.2
- * Query Engine version: 2060c79ba17c6bb9f5823312b6f6b7f4a845738e
+ * Prisma Client JS version: 6.9.0
+ * Query Engine version: 81e4af48011447c3cc503a190e86995b66d2a28e
  */
 Prisma.prismaVersion = {
-  client: "6.8.2",
-  engine: "2060c79ba17c6bb9f5823312b6f6b7f4a845738e"
+  client: "6.9.0",
+  engine: "81e4af48011447c3cc503a190e86995b66d2a28e"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -131,6 +131,43 @@ exports.Prisma.UserScalarFieldEnum = {
   refreshToken: 'refreshToken'
 };
 
+exports.Prisma.ProductScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  brand: 'brand',
+  description: 'description',
+  category: 'category',
+  gender: 'gender',
+  sizes: 'sizes',
+  colors: 'colors',
+  price: 'price',
+  stock: 'stock',
+  rating: 'rating',
+  images: 'images',
+  createAt: 'createAt',
+  updateAt: 'updateAt',
+  isFeatured: 'isFeatured'
+};
+
+exports.Prisma.FeatureBannerScalarFieldEnum = {
+  id: 'id',
+  imageUrl: 'imageUrl',
+  createAt: 'createAt',
+  updateAt: 'updateAt'
+};
+
+exports.Prisma.CouponScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  discountPercent: 'discountPercent',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  usageLimit: 'usageLimit',
+  usageCount: 'usageCount',
+  createAt: 'createAt',
+  updateAt: 'updateAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -151,7 +188,10 @@ exports.Role = exports.$Enums.Role = {
 };
 
 exports.Prisma.ModelName = {
-  User: 'User'
+  User: 'User',
+  product: 'product',
+  FeatureBanner: 'FeatureBanner',
+  Coupon: 'Coupon'
 };
 
 /**
